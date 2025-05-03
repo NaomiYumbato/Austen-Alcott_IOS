@@ -280,6 +280,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="authorLabel" destination="c5N-hX-FH4" id="sNA-TV-sJ9"/>
+                                            <outlet property="imageBook" destination="q2I-DI-ePa" id="jAS-Or-lmT"/>
                                             <outlet property="progressLabel" destination="x5b-wh-Kbi" id="7XR-LA-jDD"/>
                                             <outlet property="progressView" destination="v2k-Ju-eLO" id="k29-FX-ajG"/>
                                             <outlet property="titleLabel" destination="d4Z-vF-gE4" id="P2J-eG-JiD"/>
