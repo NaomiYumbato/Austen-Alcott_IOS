@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class RegisterViewController: UIViewController {
-    @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var firstNameField: UITextField!
     @IBOutlet weak var lastNameField: UITextField!
@@ -17,64 +18,125 @@ class RegisterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    //el campo de contraseña se ven puntos
+        passwordField.isSecureTextEntry = true
+    }
+    
+    // Registrar usuario con Firebase
+    func registerWithFirebase(email: String, password: String, firstName: String, lastName: String, phone: String) {
+        // Registrar usuario con Firebase Authentication
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                self.configureAlert(errorMessage: error.localizedDescription)
+            } else {
+                // Obtener el ID del usuario recién registrado
+                guard let userId = authResult?.user.uid else { return }
+                
+                // Guardar los datos del usuario en Firestore
+                let db = Firestore.firestore()
+                let userRef = db.collection("users").document(userId)
+                
+                userRef.setData([
+                    "email": email,
+                    "firstName": firstName,
+                    "lastName": lastName,
+                    "phone": phone,
+                    "uid": userId
+                ]) { error in
+                    if let error = error {
+                        self.configureAlert(errorMessage: error.localizedDescription)
+                    } else {
+                        print("Usuario registrado exitosamente en Firestore.")
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func registerTapped(_ sender: UIButton) {
-        // 🚧 Nota: Por ahora no ejecutamos el flujo de validación de register
-        // para simplificar las pruebas y navegación inicial de la app.
-        // retirar return cuando dejemos todo funcional
-        return
-            let username = usernameField.text ?? ""
-            let password = passwordField.text ?? ""
-            let firstName = firstNameField.text ?? ""
-            let lastName = lastNameField.text ?? ""
-            let phone = phoneField.text ?? ""
-            let email = emailField.text ?? ""
-
-            // Validar que no estén vacíos
-            if username.isEmpty || password.isEmpty || firstName.isEmpty || lastName.isEmpty || phone.isEmpty || email.isEmpty {
-                showAlert("Todos los campos son obligatorios.")
+        // Validar que los campos no estén vacíos
+        //guard indica que debe cumpir una condicion - !email.isEmpty
+        guard let email = emailField.text, !email.isEmpty,
+              let password = passwordField.text, !password.isEmpty,
+              let firstName = firstNameField.text, !firstName.isEmpty,
+              let lastName = lastNameField.text, !lastName.isEmpty,
+              let phone = phoneField.text, !phone.isEmpty else {
+            configureAlert(errorMessage: "Por favor, complete todos los campos.")
+            return
+        }
+        
+        if password.count < 6 {
+            configureAlert(errorMessage: "La contraseña debe tener al menos 6 caracteres.", fieldToFocus: passwordField)
+            return
+        }
+        
+        if !isValidPhone(phone) {
+            configureAlert(errorMessage: "El número de teléfono solo puede contener números.", fieldToFocus: phoneField)
                 return
             }
         
-
-            // Guardar los datos en UserDefaults (puedes usar un modelo de datos en el futuro para más complejidad)
-            UserDefaults.standard.set(username, forKey: "username")
-            UserDefaults.standard.set(password, forKey: "password")
-            UserDefaults.standard.set(firstName, forKey: "firstName")
-            UserDefaults.standard.set(lastName, forKey: "lastName")
-            UserDefaults.standard.set(phone, forKey: "phone")
-            UserDefaults.standard.set(email, forKey: "email")
-
-            // Volver al Login
-            dismiss(animated: true)
         
-            view.endEditing(true)
+        if !isValidEmail(email) {
+            configureAlert(errorMessage: "El correo electrónico no tiene un formato válido.", fieldToFocus: emailField)
+            return
         }
+        
+        isEmailUsed(email) { isUsed in
+                if isUsed {
+                    self.configureAlert(errorMessage: "El correo electrónico ya está en uso.", fieldToFocus: self.emailField)
+                } else {
+                    self.registerWithFirebase(email: email, password: password, firstName: firstName, lastName: lastName, phone: phone)
+                }
+            }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewcontroller = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
+        viewcontroller?.modalPresentationStyle = .overFullScreen
+        self.present(viewcontroller ?? UIViewController(), animated: true, completion: nil)
+    }
 
-        func showAlert(_ message: String) {
-            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-            present(alert, animated: true)
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
+    
+    func isValidPhone(_ phone: String) -> Bool {
+        let phoneRegEx = "^[0-9]+$"
+        let phonePred = NSPredicate(format:"SELF MATCHES %@", phoneRegEx)
+        return phonePred.evaluate(with: phone)
+    }
+
+    func isEmailUsed(_ email: String, completion: @escaping (Bool) -> Void) {
+        let db = Firestore.firestore()
+        let usersRef = db.collection("users")
+        
+        // Consultar si ya existe un usuario con ese email - devuelve docs donde este ese email o false si no encuentra docs
+        usersRef.whereField("email", isEqualTo: email).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error al verificar el email: \(error.localizedDescription)")
+                completion(false)
+                return
+            }
+            
+            // Si el número de doc devueltos es mayor a 0, el email ya está en uso
+            if querySnapshot?.documents.count ?? 0 > 0 {
+                completion(true)
+            } else {
+                completion(false)
+            }
         }
-    
-    func isValidEmail(email: String) -> Bool {
-        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-        let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-        return emailTest.evaluate(with: email)
-        
     }
+
     
-    
-    
-    @IBAction func goToLoginTapped(_ sender: UIButton) {
-        let loginVC = storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-            self.present(loginVC, animated: true, completion: nil)
-        
+    func configureAlert(errorMessage: String? = nil, message: String? = nil, fieldToFocus: UITextField? = nil) {
+        let alertMessage = errorMessage ?? message ?? "Error desconocido"
+        let alert = UIAlertController(title: errorMessage == nil ? "¡Registro exitoso!" : "Error", message: alertMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                fieldToFocus?.becomeFirstResponder()
+            }))
+        self.present(alert, animated: true, completion: nil)
     }
-    
-    
-    
-    
-    }
+}
