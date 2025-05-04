@@ -15,9 +15,7 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        getUser()
-        
+    
         //el campo de contraseña se ven puntos
         passwordField.isSecureTextEntry = true
     }
@@ -44,20 +42,22 @@ class LoginViewController: UIViewController {
             Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
                 guard let self = self else { return }
                 if error != nil {
-                    configureAlert()
+                    self.configureAlert(errorMessage: "Email o Contraseña incorrectos")
                 } else {
+                    self.getUser()
                     self.goToPush()
                 }
             }
         }
- 
-    func configureAlert() {
-            let alertController = UIAlertController(title: "Mensaje de error", message: "Email o Contraseña incorrecto", preferredStyle: .alert)
-                
-            alertController.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: nil))
-           
-            self.present(alertController, animated: true, completion: nil)
-        }
+    
+    func configureAlert(errorMessage: String? = nil, message: String? = nil, fieldToFocus: UITextField? = nil) {
+        let alertMessage = errorMessage ?? message ?? "Error desconocido"
+        let alert = UIAlertController(title: errorMessage == nil ? "¡Logeo exitoso!" : "Error", message: alertMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                fieldToFocus?.becomeFirstResponder()
+            }))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     func loginUser() {
             let email = emailField.text ?? ""
@@ -66,6 +66,11 @@ class LoginViewController: UIViewController {
         }
     
     @IBAction func didTapLogin(_ sender: UIButton) {
+        guard let email = emailField.text, !email.isEmpty,
+              let password = passwordField.text, !password.isEmpty else {
+            configureAlert(errorMessage: "Por favor, complete todos los campos.")
+            return
+        }
         loginUser()
     }
 }

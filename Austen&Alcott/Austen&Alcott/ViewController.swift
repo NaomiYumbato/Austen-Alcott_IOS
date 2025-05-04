@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         getUser()
     }
     
-    // obtiene los datos del usuario en la bd en base al correo
+    
     func getUser() {
         guard let email = Auth.auth().currentUser?.email else {
             print("No hay usuario autenticado.")
@@ -28,6 +28,7 @@ class ViewController: UIViewController {
         let db = Firestore.firestore()
         let usersRef = db.collection("users")
         
+        // Buscamos el documento del usuario por su email
         usersRef.whereField("email", isEqualTo: email).getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error al obtener el usuario: \(error.localizedDescription)")
@@ -42,14 +43,16 @@ class ViewController: UIViewController {
             let document = documents.first!
             let userData = document.data()
             
+            // Actualizamos el nombre del usuario en la interfaz
             if let name = userData["firstName"] as? String {
                 DispatchQueue.main.async {
-                    self.userNameLabel.text = "Bienvenido(a),\(name)"
+                    self.userNameLabel.text = "Bienvenido(a), \(name)"
                 }
             }
         }
     }
     
+    // Acción del botón para navegar a la vista de libros
     @IBAction func didTapGoBooks(_ sender: UIButton) {
         print("Button presionado")
         let storyboard = UIStoryboard(name: "MyBooks", bundle: nil)
@@ -60,17 +63,19 @@ class ViewController: UIViewController {
             print("No se pudo cargar el BooksViewController")
         }
     }
+    
+    // Acción para cerrar sesión
     @IBAction func pruebaButton(_ sender: UIButton) {
         do {
-                    try Auth.auth().signOut()
-                    print("Usuario desconectado.")
-                    
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    if let loginVC = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
-                        self.present(loginVC, animated: true, completion: nil)
-                    }
-                } catch let signOutError as NSError {
-                    print("Error al cerrar sesión: \(signOutError.localizedDescription)")
-                }
+            try Auth.auth().signOut()
+            print("Usuario desconectado.")
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let homeVC = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
+                self.present(homeVC, animated: true, completion: nil)
+            }
+        } catch let signOutError as NSError {
+            print("Error al cerrar sesión: \(signOutError.localizedDescription)")
+        }
     }
 }

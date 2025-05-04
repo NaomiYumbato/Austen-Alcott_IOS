@@ -63,7 +63,7 @@ class RegisterViewController: UIViewController {
               let firstName = firstNameField.text, !firstName.isEmpty,
               let lastName = lastNameField.text, !lastName.isEmpty,
               let phone = phoneField.text, !phone.isEmpty else {
-            configureAlert(errorMessage: "Por favor, complete todos los campos.", fieldToFocus: firstNameField)
+            configureAlert(errorMessage: "Por favor, complete todos los campos.")
             return
         }
         

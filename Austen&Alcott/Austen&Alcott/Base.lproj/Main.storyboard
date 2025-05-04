@@ -288,7 +288,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ocu-9r-rBR">
-                                <rect key="frame" x="0.0" y="46" width="393" height="165"/>
+                                <rect key="frame" x="0.0" y="105" width="393" height="106"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tienes 5 libros en tu estante" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w3B-GL-MSL">
                                         <rect key="frame" x="88.999999999999986" y="22" width="214.66666666666663" height="21"/>
@@ -297,17 +297,17 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XSR-fs-Qa6">
-                                        <rect key="frame" x="30" y="84" width="333" height="66.333333333333314"/>
+                                        <rect key="frame" x="30" y="84" width="333" height="7.3333333333333286"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2sk-yK-YgJ">
-                                                <rect key="frame" x="0.0" y="16.000000000000004" width="104.33333333333333" height="34.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="104.33333333333333" height="7.3333333333333321"/>
                                                 <color key="backgroundColor" name="BgPrimary"/>
                                                 <color key="tintColor" systemColor="systemBackgroundColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Disponible"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wXl-GM-tRZ">
-                                                <rect key="frame" x="114.33333333333334" y="16.000000000000004" width="104.33333333333334" height="34.333333333333343"/>
+                                                <rect key="frame" x="114.33333333333334" y="0.0" width="104.33333333333334" height="7.3333333333333321"/>
                                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" title="Button"/>
@@ -317,7 +317,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xZM-1Y-Q2g">
-                                                <rect key="frame" x="228.66666666666671" y="16.000000000000004" width="104.33333333333334" height="34.333333333333343"/>
+                                                <rect key="frame" x="228.66666666666671" y="0.0" width="104.33333333333334" height="7.3333333333333321"/>
                                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                 <color key="tintColor" systemColor="labelColor"/>
                                                 <state key="normal" title="Button"/>
@@ -783,7 +783,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="didTapLogin:" destination="HpT-8c-4y3" eventType="touchUpInside" id="Nhj-OM-C3F"/>
-                                    <segue destination="6Pz-S7-NQu" kind="presentation" modalPresentationStyle="fullScreen" id="q0W-7u-6Hb"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EeQ-CK-5aU">
