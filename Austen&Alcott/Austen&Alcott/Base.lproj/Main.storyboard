@@ -536,17 +536,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome Back," lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBT-P3-vtk">
-                                <rect key="frame" x="56" y="123" width="191" height="38"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E8G-vx-NWn">
+                                <rect key="frame" x="62" y="112" width="268" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nombre" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E8G-vx-NWn">
-                                <rect key="frame" x="245" y="126" width="91" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -604,12 +597,6 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="Group 2"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qgy-c0-EtS">
-                                <rect key="frame" x="340" y="73" width="27" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="Bell"/>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="BASED ON YOUR LAST READ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQ2-2i-CIU">
                                 <rect key="frame" x="113" y="284" width="167" height="15"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -631,6 +618,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="08Q-ZG-LT8">
+                                <rect key="frame" x="165" y="731" width="208" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="Cerrar sesion de prueba"/>
+                                <connections>
+                                    <action selector="pruebaButton:" destination="rVh-O7-lKF" eventType="touchUpInside" id="aAx-sl-KVX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="T1q-jD-W7n"/>
                         <color key="backgroundColor" red="0.061284080150000003" green="0.097952418030000002" blue="0.21337109800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -639,10 +635,13 @@
                     <tabBarItem key="tabBarItem" title="Dashboard" image="Vector (7)" id="qlF-dt-PZU" customClass="DashboardTabItem" customModule="Austen_Alcott" customModuleProvider="target">
                         <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="userNameLabel" destination="E8G-vx-NWn" id="pAJ-hh-3SA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hu3-LR-iCY" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-648" y="-739"/>
+            <point key="canvasLocation" x="-648.09160305343505" y="-739.43661971830988"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="tVh-ND-pkr">
@@ -783,7 +782,7 @@
                                     <color key="baseBackgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="loginTapped:" destination="HpT-8c-4y3" eventType="touchUpInside" id="0Hl-2c-VjI"/>
+                                    <action selector="didTapLogin:" destination="HpT-8c-4y3" eventType="touchUpInside" id="Nhj-OM-C3F"/>
                                     <segue destination="6Pz-S7-NQu" kind="presentation" modalPresentationStyle="fullScreen" id="q0W-7u-6Hb"/>
                                 </connections>
                             </button>
@@ -824,8 +823,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="emailField" destination="Ljk-D1-EQP" id="kgk-fj-P1d"/>
                         <outlet property="passwordField" destination="EeQ-CK-5aU" id="ZM8-by-Rzb"/>
-                        <outlet property="usernameField" destination="Ljk-D1-EQP" id="kXV-dP-bHo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DjN-pH-KgO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

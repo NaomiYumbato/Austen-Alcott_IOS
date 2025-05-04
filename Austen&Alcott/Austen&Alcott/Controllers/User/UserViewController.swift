@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class UserViewController: UIViewController {
 
@@ -14,6 +15,8 @@ class UserViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getUser()
         
         let path = UIBezierPath(
             roundedRect: borderView.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSizeMake(56, 56)
@@ -25,7 +28,22 @@ class UserViewController: UIViewController {
         
     }
     
+    func getUser() {
+        let _ = Auth.auth().currentUser?.email
+    }
+    
     @IBAction func didTapCloseSession(_ sender: UIButton) {
+        do {
+                try Auth.auth().signOut()
+                print("Usuario desconectado.")
+                    
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                if let loginVC = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
+                    self.present(loginVC, animated: true, completion: nil)
+                }
+            } catch let signOutError as NSError {
+                print("Error al cerrar sesión: \(signOutError.localizedDescription)")
+            }
     }
     
 }
