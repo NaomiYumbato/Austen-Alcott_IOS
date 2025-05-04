@@ -32,10 +32,10 @@ class LoginViewController: UIViewController {
     
     func goToPush() {
             let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main) 
-            let viewcontroller = storyboard.instantiateViewController(withIdentifier: "ViewController") as? ViewController
+            let viewcontroller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController
             viewcontroller?.modalPresentationStyle = .overFullScreen
         
-            self.present(viewcontroller ?? ViewController(), animated: true, completion: nil)
+            self.present(viewcontroller ?? TabViewController(), animated: true, completion: nil)
         }
     
     func loginWithFirebase(email: String, password: String) {

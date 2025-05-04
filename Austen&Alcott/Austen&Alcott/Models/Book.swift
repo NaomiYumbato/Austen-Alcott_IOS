@@ -7,14 +7,11 @@
 
 import Foundation
 
-class Book {
-    var title: String
-    var author: String
-    var progress: Int
-    
-    init(title: String, author: String, progress: Int) {
-        self.title = title
-        self.author = author
-        self.progress = progress
-    }
+struct Book {
+    let author: String?
+    let description: String?
+    let editorial: String?
+    let imageUrl: String?
+    let isReservate: Bool?
+    let title: String?
 }
