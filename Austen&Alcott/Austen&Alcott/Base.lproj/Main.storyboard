@@ -311,6 +311,9 @@
                                     <color key="baseForegroundColor" red="0.064516410790000006" green="0.16266215210000001" blue="0.28330564740000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <color key="baseBackgroundColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="didTapReservationBook:" destination="YOB-UW-rpg" eventType="touchUpInside" id="CwG-m8-DWn"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="muH-kA-V47">
                                 <rect key="frame" x="20" y="325" width="353" height="258"/>

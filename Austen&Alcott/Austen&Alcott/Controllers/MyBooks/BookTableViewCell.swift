@@ -11,11 +11,11 @@ class BookTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageBook: UIImageView!
-
+    
     func configure(with book: Book) {
         titleLabel.text = book.title
         authorLabel.text = book.author
-
+        
         if let imageUrlString = book.imageUrl, let imageUrl = URL(string: imageUrlString) {
             URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
                 if let error = error {
@@ -25,7 +25,7 @@ class BookTableViewCell: UITableViewCell {
                     }
                     return
                 }
-
+                
                 if let data = data, let image = UIImage(data: data) {
                     DispatchQueue.main.async {
                         self.imageBook.image = image
@@ -35,6 +35,6 @@ class BookTableViewCell: UITableViewCell {
         } else {
             self.imageBook.image = UIImage(named: "noImageAvailable")
         }
-
+        
     }
 }
