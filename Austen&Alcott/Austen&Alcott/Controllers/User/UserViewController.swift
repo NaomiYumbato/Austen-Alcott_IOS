@@ -24,5 +24,8 @@ class UserViewController: UIViewController {
         borderView.layer.mask = mask
         
     }
-
+    
+    @IBAction func didTapCloseSession(_ sender: UIButton) {
+    }
+    
 }
