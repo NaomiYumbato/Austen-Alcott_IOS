@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B77A0FB72DC7CFFF00EDEA2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77A0FB62DC7CFFF00EDEA2B /* User.swift */; };
 		B7E51FFC2DC6B7E900C772EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E51FFB2DC6B7E900C772EC /* AppDelegate.swift */; };
 		B7E51FFE2DC6B7E900C772EC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E51FFD2DC6B7E900C772EC /* SceneDelegate.swift */; };
 		B7E520002DC6B7E900C772EC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E51FFF2DC6B7E900C772EC /* ViewController.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B77A0FB62DC7CFFF00EDEA2B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B7E51FF82DC6B7E900C772EC /* Austen&Alcott.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Austen&Alcott.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7E51FFB2DC6B7E900C772EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B7E51FFD2DC6B7E900C772EC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,7 +72,6 @@
 			children = (
 				B7E51FFA2DC6B7E900C772EC /* Austen&Alcott */,
 				B7E51FF92DC6B7E900C772EC /* Products */,
-				B7E5201D2DC6B8AD00C772EC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,17 +101,11 @@
 			path = "Austen&Alcott";
 			sourceTree = "<group>";
 		};
-		B7E5201D2DC6B8AD00C772EC /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		B7E520262DC6BC2200C772EC /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				B7E5202E2DC6BD7F00C772EC /* Book.swift */,
+				B77A0FB62DC7CFFF00EDEA2B /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -256,6 +251,7 @@
 				B7E5202B2DC6BD3D00C772EC /* BooksViewController.swift in Sources */,
 				B7E5203C2DC6BEC000C772EC /* NavigationTab.swift in Sources */,
 				B7E520322DC6BDF600C772EC /* UserViewController.swift in Sources */,
+				B77A0FB72DC7CFFF00EDEA2B /* User.swift in Sources */,
 				B7E520062DC6B7E900C772EC /* Austen_Alcott.xcdatamodeld in Sources */,
 				B7E5202F2DC6BD7F00C772EC /* Book.swift in Sources */,
 				B7E520002DC6B7E900C772EC /* ViewController.swift in Sources */,
