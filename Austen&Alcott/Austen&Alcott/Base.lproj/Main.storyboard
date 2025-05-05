@@ -368,6 +368,7 @@
                         <outlet property="bookView" destination="KRf-Rh-7Ro" id="TYS-dY-CE1"/>
                         <outlet property="descriptionTextView" destination="muH-kA-V47" id="HVh-Ik-FKd"/>
                         <outlet property="editorialLabel" destination="3ge-KQ-cPh" id="jqT-b1-Hs2"/>
+                        <outlet property="reservationButton" destination="ZJ5-4z-sUn" id="d7o-BG-JRd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mac-94-wZa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

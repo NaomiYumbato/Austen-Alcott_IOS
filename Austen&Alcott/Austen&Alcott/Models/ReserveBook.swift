@@ -27,7 +27,7 @@ class ReserveBook: Identifiable {
     
     // Función para convertir el objeto a un Dictionary para guardar en Firestore
     func toFirestore() -> [String: Any] {
-        var firestoreData: [String: Any] = [
+        let firestoreData: [String: Any] = [
             "userId": userId,
             "bookId": bookId,
             "reservationDate": Timestamp(date: reservationDate),

@@ -15,6 +15,7 @@ class BookDetailViewController: UIViewController {
     @IBOutlet weak var autorLabel: UILabel!
     @IBOutlet weak var editorialLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var reservationButton: UIButton!
     
     var book: Book?
     let db = Firestore.firestore()
@@ -22,6 +23,7 @@ class BookDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showDetailsBook()
+        configureReservationButtonStateOnLoad()
     }
     
     func showDetailsBook() {
@@ -60,15 +62,28 @@ class BookDetailViewController: UIViewController {
         }
     }
     
+    //Si el libro seleccionado esta reservado entonces el boton sera inhabilitado
+    func configureReservationButtonStateOnLoad() {
+        if let detailedBook = book, detailedBook.isReservate == true {
+            reservationButton.isEnabled = false
+            reservationButton.setTitle("Reservado", for: .normal)
+            reservationButton.backgroundColor = .gray
+        } else {
+            reservationButton.isEnabled = true
+            reservationButton.setTitle("Reservar", for: .normal)
+            reservationButton.backgroundColor = view.tintColor // Restaura el color original del botón
+        }
+    }
+    
     @IBAction func didTapReservationBook(_ sender: UIButton) {
         guard let bookToReserve = book, let bookId = bookToReserve.id, let userId = Auth.auth().currentUser?.uid else {
             print("Error: No se pudo obtener la información del libro o del usuario.")
             showAlert(title: "Error", message: "No se pudo realizar la reserva. Inténtalo de nuevo.")
             return
         }
-        
+
         let reservation = ReserveBook(userId: userId, bookId: bookId, reservationDate: Date())
-        
+
         // Guardar la reserva en Firestore
         db.collection("ReserveBooks").addDocument(data: reservation.toFirestore()) { [weak self] error in
             guard let strongSelf = self else { return }
@@ -78,8 +93,20 @@ class BookDetailViewController: UIViewController {
             } else {
                 print("Reserva guardada con éxito en Firestore.")
                 strongSelf.showAlert(title: "¡Reserva Exitosa!", message: "El libro '\(bookToReserve.title ?? "Sin título")' ha sido reservado.") {
-                    // Opcional: Realizar alguna acción después de la reserva exitosa, como volver a la lista de libros
-                    strongSelf.navigationController?.popViewController(animated: true)
+                    // Actualizar el documento del libro en la colección "books"
+                    strongSelf.db.collection("books").document(bookId).updateData(["isReservate": true]) { error in
+                        if let error = error {
+                            print("Error al actualizar el estado del libro en Firestore: \(error)")
+                            // Podrías mostrar un mensaje al usuario indicando que la reserva se realizó,
+                            // pero hubo un problema al actualizar la información del libro.
+                        } else {
+                            print("Estado del libro actualizado a 'reservado' en Firestore.")
+                            // Opcional: Actualizar la propiedad local del libro para reflejar el cambio
+                            strongSelf.book?.isReservate = true
+                            strongSelf.configureReservationButtonStateOnLoad() // Reconfigurar el botón
+                        }
+                        strongSelf.navigationController?.popViewController(animated: true)
+                    }
                 }
             }
         }

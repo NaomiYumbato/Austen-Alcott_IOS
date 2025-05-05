@@ -13,7 +13,7 @@ class Book: Identifiable {
     let description: String?
     let editorial: String?
     let imageUrl: String?
-    let isReservate: Bool?
+    var isReservate: Bool?
     let title: String?
     
     init(id: String? = nil, author: String? = nil, description: String? = nil, editorial: String? = nil, imageUrl: String? = nil, isReservate: Bool? = nil, title: String? = nil) {
