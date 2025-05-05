@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 
 class BookDetailViewController: UIViewController {
     
@@ -18,8 +17,7 @@ class BookDetailViewController: UIViewController {
     @IBOutlet weak var reservationButton: UIButton!
     
     var book: Book?
-    let db = Firestore.firestore()
-    
+    let reserveBookService = ReserveBookService()
     override func viewDidLoad() {
         super.viewDidLoad()
         showDetailsBook()
@@ -81,31 +79,29 @@ class BookDetailViewController: UIViewController {
             showAlert(title: "Error", message: "No se pudo realizar la reserva. Inténtalo de nuevo.")
             return
         }
-
-        let reservation = ReserveBook(userId: userId, bookId: bookId, reservationDate: Date())
-
-        // Guardar la reserva en Firestore
-        db.collection("ReserveBooks").addDocument(data: reservation.toFirestore()) { [weak self] error in
+        
+        //Reservamos el libro
+        reserveBookService.reserveBook(userId: userId, bookId: bookId, reservationDate: Date()) { [weak self] error in
             guard let strongSelf = self else { return }
             if let error = error {
-                print("Error al guardar la reserva en Firestore: \(error)")
+                print("Error al guardar la reserva: \(error)")
                 strongSelf.showAlert(title: "Error", message: "Hubo un problema al realizar la reserva. Inténtalo más tarde.")
             } else {
-                print("Reserva guardada con éxito en Firestore.")
-                strongSelf.showAlert(title: "¡Reserva Exitosa!", message: "El libro '\(bookToReserve.title ?? "Sin título")' ha sido reservado.") {
-                    // Actualizar el documento del libro en la colección "books"
-                    strongSelf.db.collection("books").document(bookId).updateData(["isReservate": true]) { error in
-                        if let error = error {
-                            print("Error al actualizar el estado del libro en Firestore: \(error)")
-                            // Podrías mostrar un mensaje al usuario indicando que la reserva se realizó,
-                            // pero hubo un problema al actualizar la información del libro.
-                        } else {
-                            print("Estado del libro actualizado a 'reservado' en Firestore.")
-                            // Opcional: Actualizar la propiedad local del libro para reflejar el cambio
-                            strongSelf.book?.isReservate = true
-                            strongSelf.configureReservationButtonStateOnLoad() // Reconfigurar el botón
+                print("Reserva guardada con éxito.")
+                // Actualizamos el estado de el libro en la collection books
+                strongSelf.reserveBookService.updateBookReservationStatus(bookId: bookId, isReserved: true) { error in
+                    if let error = error {
+                        print("Error al actualizar el estado del libro: \(error)")
+                        strongSelf.showAlert(title: "¡Reserva Exitosa!", message: "El libro '\(bookToReserve.title ?? "Sin título")' ha sido reservado, pero hubo un problema al actualizar su estado.") {
+                            strongSelf.navigationController?.popViewController(animated: true)
                         }
-                        strongSelf.navigationController?.popViewController(animated: true)
+                    } else {
+                        print("Estado del libro actualizado con éxito.")
+                        strongSelf.showAlert(title: "¡Reserva Exitosa!", message: "El libro '\(bookToReserve.title ?? "Sin título")' ha sido reservado.") {
+                            strongSelf.book?.isReservate = true
+                            strongSelf.configureReservationButtonStateOnLoad()
+                            strongSelf.navigationController?.popViewController(animated: true)
+                        }
                     }
                 }
             }

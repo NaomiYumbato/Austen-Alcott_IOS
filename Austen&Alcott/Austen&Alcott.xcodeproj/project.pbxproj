@@ -30,6 +30,8 @@
 		B7E520412DC6BF2400C772EC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E520402DC6BF2400C772EC /* HomeViewController.swift */; };
 		E10A85502DC80BEC0082FE10 /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10A854F2DC80BEC0082FE10 /* BookDetailViewController.swift */; };
 		E1790D972DC82AA1006CFCE7 /* ReserveBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1790D962DC82AA1006CFCE7 /* ReserveBook.swift */; };
+		E1790D9A2DC83DF7006CFCE7 /* BookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1790D992DC83DF7006CFCE7 /* BookService.swift */; };
+		E1790D9C2DC842A6006CFCE7 /* ReserveBookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1790D9B2DC842A6006CFCE7 /* ReserveBookService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,8 @@
 		B7E520402DC6BF2400C772EC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E10A854F2DC80BEC0082FE10 /* BookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
 		E1790D962DC82AA1006CFCE7 /* ReserveBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReserveBook.swift; sourceTree = "<group>"; };
+		E1790D992DC83DF7006CFCE7 /* BookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookService.swift; sourceTree = "<group>"; };
+		E1790D9B2DC842A6006CFCE7 /* ReserveBookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReserveBookService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +94,7 @@
 		B7E51FFA2DC6B7E900C772EC /* Austen&Alcott */ = {
 			isa = PBXGroup;
 			children = (
+				E1790D982DC83DE9006CFCE7 /* Services */,
 				B7E520282DC6BCA200C772EC /* Controllers */,
 				B7E520262DC6BC2200C772EC /* Models */,
 				B7E520242DC6BA5000C772EC /* GoogleService-Info.plist */,
@@ -179,6 +184,15 @@
 			path = Books;
 			sourceTree = "<group>";
 		};
+		E1790D982DC83DE9006CFCE7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E1790D992DC83DF7006CFCE7 /* BookService.swift */,
+				E1790D9B2DC842A6006CFCE7 /* ReserveBookService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -263,12 +277,14 @@
 				B7E520352DC6BE1700C772EC /* LoginViewController.swift in Sources */,
 				B7E520372DC6BE2400C772EC /* RegisterViewController.swift in Sources */,
 				E1790D972DC82AA1006CFCE7 /* ReserveBook.swift in Sources */,
+				E1790D9A2DC83DF7006CFCE7 /* BookService.swift in Sources */,
 				B7E5202B2DC6BD3D00C772EC /* BooksViewController.swift in Sources */,
 				B7E5203C2DC6BEC000C772EC /* NavigationTab.swift in Sources */,
 				B7E520322DC6BDF600C772EC /* UserViewController.swift in Sources */,
 				B77A0FB72DC7CFFF00EDEA2B /* User.swift in Sources */,
 				B7E520062DC6B7E900C772EC /* Austen_Alcott.xcdatamodeld in Sources */,
 				B7E5202F2DC6BD7F00C772EC /* Book.swift in Sources */,
+				E1790D9C2DC842A6006CFCE7 /* ReserveBookService.swift in Sources */,
 				B7E520002DC6B7E900C772EC /* ViewController.swift in Sources */,
 				B7E51FFC2DC6B7E900C772EC /* AppDelegate.swift in Sources */,
 				B7E5202D2DC6BD5400C772EC /* BookTableViewCell.swift in Sources */,

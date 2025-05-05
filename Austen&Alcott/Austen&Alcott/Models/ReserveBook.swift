@@ -8,14 +8,13 @@
 import Foundation
 import FirebaseFirestore
 
-class ReserveBook: Identifiable {
-    // Conformando a Identifiable para usar en List o ForEach en SwiftUI
-    var id: String?
+class ReserveBook {
+    let id: String?
     let userId: String
     let bookId: String
     let reservationDate: Date
     var status: String = "active"
-
+    
     
     init(id: String? = nil, userId: String, bookId: String, reservationDate: Date, status: String = "active") {
         self.id = id
@@ -35,25 +34,5 @@ class ReserveBook: Identifiable {
         ]
         
         return firestoreData
-    }
-    
-    // Inicializador desde un Dictionary para desde Firestore
-    init?(document: QueryDocumentSnapshot) {
-        self.id = document.documentID
-        let data = document.data()
-        
-        guard
-            let userId = data["userId"] as? String,
-            let bookId = data["bookId"] as? String,
-            let reservationDateTimestamp = data["reservationDate"] as? Timestamp
-        else {
-            return nil
-        }
-        
-        self.userId = userId
-        self.bookId = bookId
-        self.reservationDate = reservationDateTimestamp.dateValue()
-        self.status = data["status"] as? String ?? "active"
-        
     }
 }

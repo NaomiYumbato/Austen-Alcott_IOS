@@ -1,21 +1,15 @@
-//
-//  Book.swift
-//  Austen&Alcott
-//
-//  Created by Crhistian Ninalaya on 17/04/25.
-//
-
 import Foundation
+import FirebaseFirestore
 
-class Book: Identifiable {
-    var id: String?
-    let author: String?
-    let description: String?
-    let editorial: String?
-    let imageUrl: String?
+class Book {
+    let id: String?
+    var author: String?
+    var description: String?
+    var editorial: String?
+    var imageUrl: String?
     var isReservate: Bool?
-    let title: String?
-    
+    var title: String?
+
     init(id: String? = nil, author: String? = nil, description: String? = nil, editorial: String? = nil, imageUrl: String? = nil, isReservate: Bool? = nil, title: String? = nil) {
         self.id = id
         self.author = author
@@ -24,5 +18,18 @@ class Book: Identifiable {
         self.imageUrl = imageUrl
         self.isReservate = isReservate
         self.title = title
+    }
+
+    // Inicializador desde un Dictionary (Sirve para leer datos desde Firestore)
+    init?(document: QueryDocumentSnapshot) {
+        self.id = document.documentID
+        let data = document.data()
+
+        self.author = data["author"] as? String
+        self.title = data["title"] as? String
+        self.description = data["description"] as? String
+        self.editorial = data["editorial"] as? String
+        self.imageUrl = data["imageUrl"] as? String
+        self.isReservate = data["isReservate"] as? Bool
     }
 }
