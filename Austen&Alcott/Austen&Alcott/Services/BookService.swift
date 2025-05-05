@@ -1,5 +1,13 @@
+//
+//  BookService.swift
+//  Austen&Alcott
+//
+//  Created by Crhistian Ninalaya on 4/05/25.
+//
+
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 class BookService {
     let db = Firestore.firestore()
@@ -41,6 +49,51 @@ class BookService {
                 completion(nil)
             }
         }
+    }
+    func getReservedBooksForCurrentUser(completion: @escaping ([Book]) -> Void) {
+        guard let currentUserId = Auth.auth().currentUser?.uid else {
+            print("Error: No hay usuario logeado.")
+            completion([])
+            return
+        }
+        
+        db.collection("ReserveBooks")
+            .whereField("userId", isEqualTo: currentUserId)
+            .getDocuments { [weak self] (reserveQuerySnapshot, reserveError) in
+                guard let self = self else { return }
+                
+                if let reserveError = reserveError {
+                    print("Error al traer reservaciones del usuario: \(reserveError)")
+                    completion([])
+                    return
+                }
+                
+                guard let reserveDocuments = reserveQuerySnapshot?.documents else {
+                    print("No se encontraron reservaciones del usuario actual.")
+                    completion([])
+                    return
+                }
+                
+                let reservedBookIds = reserveDocuments.compactMap { $0.data()["bookId"] as? String }
+                
+                if reservedBookIds.isEmpty {
+                    completion([])
+                    return
+                }
+                
+                db.collection("books")
+                    .whereField(FieldPath.documentID(), in: reservedBookIds)
+                    .getDocuments { (bookQuerySnapshot, bookError) in
+                        if let bookError = bookError {
+                            print("Error fetching reserved books: \(bookError)")
+                            completion([])
+                            return
+                        }
+                        
+                        let reservedBooks = bookQuerySnapshot?.documents.compactMap { Book(document: $0) } ?? []
+                        completion(reservedBooks)
+                    }
+            }
     }
     
 }
