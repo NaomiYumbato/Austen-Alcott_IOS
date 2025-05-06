@@ -22,6 +22,10 @@ class RegisterViewController: UIViewController {
         passwordField.isSecureTextEntry = true
     }
     
+    @IBAction func didTapBackButton(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     // Registrar usuario con Firebase
     func registerWithFirebase(email: String, password: String, firstName: String, lastName: String, phone: String) {
         // Registrar usuario con Firebase Authentication
@@ -139,4 +143,5 @@ class RegisterViewController: UIViewController {
             }))
         self.present(alert, animated: true, completion: nil)
     }
+    
 }

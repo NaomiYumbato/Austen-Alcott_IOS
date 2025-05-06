@@ -73,4 +73,8 @@ class LoginViewController: UIViewController {
         }
         loginUser()
     }
+    
+    @IBAction func didTapBackButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
