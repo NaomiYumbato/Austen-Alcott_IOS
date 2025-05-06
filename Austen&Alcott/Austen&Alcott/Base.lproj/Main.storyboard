@@ -180,6 +180,9 @@
                                             <color key="baseForegroundColor" red="0.064516410790000006" green="0.16266215210000001" blue="0.28330564740000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="didTapCloseSession:" destination="JcC-7o-6LG" eventType="touchUpInside" id="wVW-XJ-cYE"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -485,15 +488,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="08Q-ZG-LT8">
-                                <rect key="frame" x="165" y="731" width="208" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="gray" title="Cerrar sesion de prueba"/>
-                                <connections>
-                                    <action selector="pruebaButton:" destination="rVh-O7-lKF" eventType="touchUpInside" id="aAx-sl-KVX"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="T1q-jD-W7n"/>
                         <color key="backgroundColor" red="0.061284080150000003" green="0.097952418030000002" blue="0.21337109800000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -611,7 +605,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Crf-Xe-yRs">
-                                <rect key="frame" x="75" y="724" width="243" height="36"/>
+                                <rect key="frame" x="75" y="724" width="243" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Salir">

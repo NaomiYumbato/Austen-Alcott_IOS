@@ -34,16 +34,16 @@ class UserViewController: UIViewController {
     
     @IBAction func didTapCloseSession(_ sender: UIButton) {
         do {
-                try Auth.auth().signOut()
-                print("Usuario desconectado.")
-                    
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                if let loginVC = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
-                    self.present(loginVC, animated: true, completion: nil)
-                }
-            } catch let signOutError as NSError {
-                print("Error al cerrar sesión: \(signOutError.localizedDescription)")
+            try Auth.auth().signOut()
+            print("Usuario desconectado.")
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let homeVC = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
+                self.present(homeVC, animated: true, completion: nil)
             }
+        } catch let signOutError as NSError {
+            print("Error al cerrar sesión: \(signOutError.localizedDescription)")
+        }
     }
     
 }

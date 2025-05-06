@@ -63,19 +63,4 @@ class ViewController: UIViewController {
             print("No se pudo cargar el BooksViewController")
         }
     }
-    
-    // Acción para cerrar sesión
-    @IBAction func pruebaButton(_ sender: UIButton) {
-        do {
-            try Auth.auth().signOut()
-            print("Usuario desconectado.")
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let homeVC = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
-                self.present(homeVC, animated: true, completion: nil)
-            }
-        } catch let signOutError as NSError {
-            print("Error al cerrar sesión: \(signOutError.localizedDescription)")
-        }
-    }
 }
