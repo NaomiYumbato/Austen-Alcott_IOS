@@ -12,6 +12,9 @@ import FirebaseFirestore
 class ViewController: UIViewController{
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var horizontallyScrollableStackView: UIStackView!
+    @IBOutlet weak var bordeView: UIView!
+    
+    @IBOutlet weak var borderBottom: UIView!
     let bookService = BookService()
     
     override func viewDidLoad() {
@@ -21,6 +24,22 @@ class ViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let path = UIBezierPath(
+            roundedRect: bordeView.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSizeMake(56, 56)
+        )
+        let pathbottom = UIBezierPath(
+            roundedRect: borderBottom.bounds, byRoundingCorners: [.bottomLeft, .bottomRight], cornerRadii: CGSizeMake(56, 56)
+        )
+        let mask =  CAShapeLayer()
+        let maskbottom =  CAShapeLayer()
+        
+        mask.path = path.cgPath
+        maskbottom.path = pathbottom.cgPath
+        
+        bordeView.layer.mask = mask
+        borderBottom.layer.mask = maskbottom
+        
         loadUserData()
         loadBooksFromFirestore()
     }

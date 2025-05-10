@@ -18,6 +18,7 @@ class RegisterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        passwordField.isSecureTextEntry = true
     }
     
     @IBAction func didTapBackButton(_ sender: UIButton) {
