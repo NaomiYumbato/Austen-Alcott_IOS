@@ -9,16 +9,21 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class ViewController: UIViewController {
+class ViewController: UIViewController{
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var horizontallyScrollableStackView: UIStackView!
     let bookService = BookService()
     
     override func viewDidLoad() {
             super.viewDidLoad()
-            loadUserData()
-            loadBooksFromFirestore()
+            
         }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadUserData()
+        loadBooksFromFirestore()
+    }
         
         func loadUserData() {
             UserService.shared.getCurrentUser { result in
@@ -69,6 +74,7 @@ class ViewController: UIViewController {
                 }
             }
         }
-    }
+
+}
 
 
