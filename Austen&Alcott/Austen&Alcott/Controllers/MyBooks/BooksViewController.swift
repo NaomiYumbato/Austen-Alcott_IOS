@@ -23,12 +23,18 @@ class BooksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    //Esto solo actua la primera vez que se renderiza la vista
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchAndDisplayReservedBooks()
         booksTableView.delegate = self
         booksTableView.dataSource = self
+    }
+    //En cambio, este metodo se ejecuta cada vez que se vaya a renderizar la vista
+    //Por ello moveremos el metodo para traer data aqui
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchAndDisplayReservedBooks()
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,6 +52,10 @@ class BooksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.configure(with: book)
         
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
     }
     
     // MARK: - Navigation
