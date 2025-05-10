@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9CCDDAB82DCBCF0800C8F000 /* UserEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCDDAB72DCBCF0800C8F000 /* UserEditViewController.swift */; };
+		B75EA9FD2DCFA7F100BA242A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75EA9FC2DCFA7F100BA242A /* UserService.swift */; };
 		B77A0FB72DC7CFFF00EDEA2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77A0FB62DC7CFFF00EDEA2B /* User.swift */; };
 		B7E51FFC2DC6B7E900C772EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E51FFB2DC6B7E900C772EC /* AppDelegate.swift */; };
 		B7E51FFE2DC6B7E900C772EC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E51FFD2DC6B7E900C772EC /* SceneDelegate.swift */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		9CCDDAB72DCBCF0800C8F000 /* UserEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditViewController.swift; sourceTree = "<group>"; };
+		B75EA9FC2DCFA7F100BA242A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		B77A0FB62DC7CFFF00EDEA2B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B7E51FF82DC6B7E900C772EC /* Austen&Alcott.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Austen&Alcott.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7E51FFB2DC6B7E900C772EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			children = (
 				E1790D992DC83DF7006CFCE7 /* BookService.swift */,
 				E1790D9B2DC842A6006CFCE7 /* ReserveBookService.swift */,
+				B75EA9FC2DCFA7F100BA242A /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				B7E5202F2DC6BD7F00C772EC /* Book.swift in Sources */,
 				E1790D9C2DC842A6006CFCE7 /* ReserveBookService.swift in Sources */,
 				B7E520002DC6B7E900C772EC /* ViewController.swift in Sources */,
+				B75EA9FD2DCFA7F100BA242A /* UserService.swift in Sources */,
 				9CCDDAB82DCBCF0800C8F000 /* UserEditViewController.swift in Sources */,
 				B7E51FFC2DC6B7E900C772EC /* AppDelegate.swift in Sources */,
 				B7E5202D2DC6BD5400C772EC /* BookTableViewCell.swift in Sources */,

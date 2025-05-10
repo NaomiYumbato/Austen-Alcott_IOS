@@ -15,81 +15,60 @@ class ViewController: UIViewController {
     let bookService = BookService()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        getUser()
-        loadBooksFromFirestore()
-    }
-    
-    func getUser() {
-        guard let email = Auth.auth().currentUser?.email else {
-            print("No hay usuario autenticado.")
-            return
+            super.viewDidLoad()
+            loadUserData()
+            loadBooksFromFirestore()
         }
         
-        let db = Firestore.firestore()
-        let usersRef = db.collection("users")
-        
-        // Buscamos el documento del usuario por su email
-        usersRef.whereField("email", isEqualTo: email).getDocuments { (snapshot, error) in
-            if let error = error {
-                print("Error al obtener el usuario: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let documents = snapshot?.documents, !documents.isEmpty else {
-                print("No se encontró ningún usuario con ese correo")
-                return
-            }
-            
-            let document = documents.first!
-            let userData = document.data()
-            
-            // Actualizamos el nombre del usuario en la interfaz
-            if let name = userData["firstName"] as? String {
-                DispatchQueue.main.async {
-                    self.userNameLabel.text = "Bienvenido(a), \(name)"
-                }
-            }
-        }
-    }
-    
-    func loadBooksFromFirestore() {
-        bookService.getAllBooks { books in
-            DispatchQueue.main.async {
-                for book in books {
-                    guard
-                        let dayView = Bundle.main.loadNibNamed("DayView", owner: nil, options: nil)?.first as? DayView,
-                        let urlString = book.imageUrl,
-                        let url = URL(string: urlString)
-                    else { continue }
-                    
-                    dayView.book = book
-                    dayView.translatesAutoresizingMaskIntoConstraints = false
-                    dayView.widthAnchor.constraint(equalToConstant: self.horizontallyScrollableStackView.frame.height).isActive = true
-                    self.horizontallyScrollableStackView.addArrangedSubview(dayView)
-                    
-                    // Acción al tocar la imagen
-                    dayView.onTap = { [weak self] selectedBook in
-                        guard let self = self else { return }
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        if let detailVC = storyboard.instantiateViewController(withIdentifier: "BookDetailViewController") as? BookDetailViewController {
-                            detailVC.book = selectedBook
-                            self.navigationController?.pushViewController(detailVC, animated: true)
-                        }
+        func loadUserData() {
+            UserService.shared.getCurrentUser { result in
+                switch result {
+                case .success(let user):
+                    DispatchQueue.main.async {
+                        self.userNameLabel.text = "Bienvenido(a), \(user.firstName)"
                     }
-                    
-                    // Cargar imagen
-                    URLSession.shared.dataTask(with: url) { data, _, _ in
-                        guard let data = data else { return }
-                        DispatchQueue.main.async {
-                            dayView.bookImageView.image = UIImage(data: data)
+                case .failure(let error):
+                    print("Error al obtener usuario: \(error.localizedDescription)")
+                }
+            }
+        }
+
+        func loadBooksFromFirestore() {
+            bookService.getAllBooks { books in
+                DispatchQueue.main.async {
+                    for book in books {
+                        guard
+                            let dayView = Bundle.main.loadNibNamed("DayView", owner: nil, options: nil)?.first as? DayView,
+                            let urlString = book.imageUrl,
+                            let url = URL(string: urlString)
+                        else { continue }
+
+                        dayView.book = book
+                        dayView.translatesAutoresizingMaskIntoConstraints = false
+                        dayView.widthAnchor.constraint(equalToConstant: self.horizontallyScrollableStackView.frame.height).isActive = true
+                        self.horizontallyScrollableStackView.addArrangedSubview(dayView)
+
+                        // Acción al tocar la imagen
+                        dayView.onTap = { [weak self] selectedBook in
+                            guard let self = self else { return }
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            if let detailVC = storyboard.instantiateViewController(withIdentifier: "BookDetailViewController") as? BookDetailViewController {
+                                detailVC.book = selectedBook
+                                self.navigationController?.pushViewController(detailVC, animated: true)
+                            }
                         }
-                    }.resume()
+
+                        // Cargar imagen
+                        URLSession.shared.dataTask(with: url) { data, _, _ in
+                            guard let data = data else { return }
+                            DispatchQueue.main.async {
+                                dayView.bookImageView.image = UIImage(data: data)
+                            }
+                        }.resume()
+                    }
                 }
             }
         }
     }
-    
-    
-}
+
 

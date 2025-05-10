@@ -34,12 +34,7 @@ class UserEditViewController: UIViewController {
                     let data = document.data()
                     self.nameUserTF.text = data?["firstName"] as? String ?? ""
                     self.lastNameUserTF.text = data?["lastName"] as? String ?? ""
-
-                    if let phone = data?["phone"] as? NSNumber {
-                        self.phoneUserTF.text = phone.stringValue
-                    } else {
-                        self.phoneUserTF.text = ""
-                    }
+                    self.phoneUserTF.text = data?["phone"] as? String ?? ""
 
                 } else {
                     self.showAlert(title: "Error", message: "No se encontró la información del perfil.")
