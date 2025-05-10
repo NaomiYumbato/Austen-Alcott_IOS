@@ -9,38 +9,23 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    @IBOutlet weak var collectionView: UICollectionView!
+class ViewController: UIViewController {
     @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var horizontallyScrollableStackView: UIStackView!
+    let bookService = BookService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getUser()
-        // 1. Crear el UICollectionViewFlowLayout
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal // Establecer el desplazamiento horizontal
-        layout.itemSize = CGSize(width: 150, height: 250) // Tamaño de cada celda
-        layout.minimumInteritemSpacing = 10 // Espacio mínimo entre celdas horizontalmente
-        layout.minimumLineSpacing = 10 // Espacio mínimo entre filas (aunque aquí no aplica directamente)
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) // Márgenes alrededor de la sección
-
-        // 2. Inicializar el UICollectionView
-        collectionView.collectionViewLayout = layout
-        collectionView.dataSource = self
-        collectionView.delegate = self
-
-        // 3. Registrar la celda
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CeldaHorizontal")
+        loadBooksFromFirestore()
     }
-    
     
     func getUser() {
         guard let email = Auth.auth().currentUser?.email else {
             print("No hay usuario autenticado.")
             return
         }
-
+        
         let db = Firestore.firestore()
         let usersRef = db.collection("users")
         
@@ -68,44 +53,36 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
-    let datos = ["Dato 1", "Dato 2", "Dato 3", "Dato 4", "Dato 5", "Dato 6", "Dato 7", "Dato 8", "Dato 9", "Dato 10"]
-
-    // MARK: - UICollectionViewDataSource
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return datos.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CeldaHorizontal", for: indexPath)
-        cell.backgroundColor = .systemBlue
-        let label = UILabel(frame: cell.contentView.bounds)
-        label.text = datos[indexPath.item]
-        label.textAlignment = .center
-        label.textColor = .white
-        cell.contentView.addSubview(label)
-        return cell
-    }
-
-    // MARK: - UICollectionViewDelegateFlowLayout (Opcional para ajustar el tamaño dinámicamente)
-
-    // Si quieres un tamaño de celda dinámico basado en el contenido, puedes implementar estos métodos.
-    // Por ahora, el tamaño está fijo en el layout.
-
-    
-    // Acción del botón para navegar a la vista de libros
-    @IBAction func didTapGoBooks(_ sender: UIButton) {
-        print("Button presionado")
-        let storyboard = UIStoryboard(name: "MyBooks", bundle: nil)
-        
-        if let booksVC = storyboard.instantiateViewController(withIdentifier: "BooksViewController") as? BooksViewController {
-            self.navigationController?.pushViewController(booksVC, animated: true)
-        } else {
-            print("No se pudo cargar el BooksViewController")
+    func loadBooksFromFirestore() {
+        bookService.getAllBooks { books in
+            DispatchQueue.main.async {
+                for book in books {
+                    guard
+                        let dayView = Bundle.main.loadNibNamed("DayView", owner: nil, options: nil)?.first as? DayView,
+                        let urlString = book.imageUrl,
+                        let url = URL(string: urlString)
+                    else {
+                        continue
+                    }
+                    
+                    dayView.book = book
+                    
+                    dayView.translatesAutoresizingMaskIntoConstraints = false
+                    dayView.widthAnchor.constraint(equalToConstant: self.horizontallyScrollableStackView.frame.height).isActive = true
+                    
+                    self.horizontallyScrollableStackView.addArrangedSubview(dayView)
+                    
+                    
+                    URLSession.shared.dataTask(with: url) { data, _, error in
+                        guard let data = data, error == nil else { return }
+                        DispatchQueue.main.async {
+                            dayView.bookImageView.image = UIImage(data: data)
+                        }
+                    }.resume()
+                }
+            }
         }
     }
+    
 }
+

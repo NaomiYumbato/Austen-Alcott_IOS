@@ -33,6 +33,8 @@
 		E1790D972DC82AA1006CFCE7 /* ReserveBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1790D962DC82AA1006CFCE7 /* ReserveBook.swift */; };
 		E1790D9A2DC83DF7006CFCE7 /* BookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1790D992DC83DF7006CFCE7 /* BookService.swift */; };
 		E1790D9C2DC842A6006CFCE7 /* ReserveBookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1790D9B2DC842A6006CFCE7 /* ReserveBookService.swift */; };
+		E1A8B7032DCF0B1A0079EC5B /* DayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A8B7022DCF0B1A0079EC5B /* DayView.xib */; };
+		E1A8B7042DCF0B1A0079EC5B /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A8B7012DCF0B1A0079EC5B /* DayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +63,8 @@
 		E1790D962DC82AA1006CFCE7 /* ReserveBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReserveBook.swift; sourceTree = "<group>"; };
 		E1790D992DC83DF7006CFCE7 /* BookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookService.swift; sourceTree = "<group>"; };
 		E1790D9B2DC842A6006CFCE7 /* ReserveBookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReserveBookService.swift; sourceTree = "<group>"; };
+		E1A8B7012DCF0B1A0079EC5B /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
+		E1A8B7022DCF0B1A0079EC5B /* DayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +112,8 @@
 				B7E520092DC6B7EA00C772EC /* LaunchScreen.storyboard */,
 				B7E5200C2DC6B7EA00C772EC /* Info.plist */,
 				B7E520042DC6B7E900C772EC /* Austen_Alcott.xcdatamodeld */,
+				E1A8B7012DCF0B1A0079EC5B /* DayView.swift */,
+				E1A8B7022DCF0B1A0079EC5B /* DayView.xib */,
 			);
 			path = "Austen&Alcott";
 			sourceTree = "<group>";
@@ -264,6 +270,7 @@
 			files = (
 				B7E5200B2DC6B7EA00C772EC /* LaunchScreen.storyboard in Resources */,
 				B7E520252DC6BA5000C772EC /* GoogleService-Info.plist in Resources */,
+				E1A8B7032DCF0B1A0079EC5B /* DayView.xib in Resources */,
 				B7E520082DC6B7EA00C772EC /* Assets.xcassets in Resources */,
 				B7E520032DC6B7E900C772EC /* Main.storyboard in Resources */,
 			);
@@ -277,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7E5203E2DC6BEE800C772EC /* TabViewController.swift in Sources */,
+				E1A8B7042DCF0B1A0079EC5B /* DayView.swift in Sources */,
 				B7E520352DC6BE1700C772EC /* LoginViewController.swift in Sources */,
 				B7E520372DC6BE2400C772EC /* RegisterViewController.swift in Sources */,
 				E1790D972DC82AA1006CFCE7 /* ReserveBook.swift in Sources */,
