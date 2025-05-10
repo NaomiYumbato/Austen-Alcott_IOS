@@ -18,8 +18,6 @@ class RegisterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    //el campo de contraseña se ven puntos
-        passwordField.isSecureTextEntry = true
     }
     
     @IBAction func didTapBackButton(_ sender: UIButton) {
@@ -77,10 +75,9 @@ class RegisterViewController: UIViewController {
         }
         
         if !isValidPhone(phone) {
-            configureAlert(errorMessage: "El número de teléfono solo puede contener números.", fieldToFocus: phoneField)
+            configureAlert(errorMessage: "El número de teléfono debe contener 9 números.", fieldToFocus: phoneField)
                 return
             }
-        
         
         if !isValidEmail(email) {
             configureAlert(errorMessage: "El correo electrónico no tiene un formato válido.", fieldToFocus: emailField)
@@ -108,7 +105,7 @@ class RegisterViewController: UIViewController {
     }
     
     func isValidPhone(_ phone: String) -> Bool {
-        let phoneRegEx = "^[0-9]+$"
+        let phoneRegEx = "^[0-9]{9}$"
         let phonePred = NSPredicate(format:"SELF MATCHES %@", phoneRegEx)
         return phonePred.evaluate(with: phone)
     }

@@ -9,103 +9,72 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    @IBOutlet weak var collectionView: UICollectionView!
+class ViewController: UIViewController{
     @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var horizontallyScrollableStackView: UIStackView!
+    let bookService = BookService()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        getUser()
-        // 1. Crear el UICollectionViewFlowLayout
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal // Establecer el desplazamiento horizontal
-        layout.itemSize = CGSize(width: 150, height: 250) // Tamaño de cada celda
-        layout.minimumInteritemSpacing = 10 // Espacio mínimo entre celdas horizontalmente
-        layout.minimumLineSpacing = 10 // Espacio mínimo entre filas (aunque aquí no aplica directamente)
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) // Márgenes alrededor de la sección
-
-        // 2. Inicializar el UICollectionView
-        collectionView.collectionViewLayout = layout
-        collectionView.dataSource = self
-        collectionView.delegate = self
-
-        // 3. Registrar la celda
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CeldaHorizontal")
-    }
-    
-    
-    func getUser() {
-        guard let email = Auth.auth().currentUser?.email else {
-            print("No hay usuario autenticado.")
-            return
+            super.viewDidLoad()
+            
         }
-
-        let db = Firestore.firestore()
-        let usersRef = db.collection("users")
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadUserData()
+        loadBooksFromFirestore()
+    }
         
-        // Buscamos el documento del usuario por su email
-        usersRef.whereField("email", isEqualTo: email).getDocuments { (snapshot, error) in
-            if let error = error {
-                print("Error al obtener el usuario: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let documents = snapshot?.documents, !documents.isEmpty else {
-                print("No se encontró ningún usuario con ese correo")
-                return
-            }
-            
-            let document = documents.first!
-            let userData = document.data()
-            
-            // Actualizamos el nombre del usuario en la interfaz
-            if let name = userData["firstName"] as? String {
-                DispatchQueue.main.async {
-                    self.userNameLabel.text = "Bienvenido(a), \(name)"
+        func loadUserData() {
+            UserService.shared.getCurrentUser { result in
+                switch result {
+                case .success(let user):
+                    DispatchQueue.main.async {
+                        self.userNameLabel.text = "Bienvenido(a), \(user.firstName)"
+                    }
+                case .failure(let error):
+                    print("Error al obtener usuario: \(error.localizedDescription)")
                 }
             }
         }
-    }
-    
-    let datos = ["Dato 1", "Dato 2", "Dato 3", "Dato 4", "Dato 5", "Dato 6", "Dato 7", "Dato 8", "Dato 9", "Dato 10"]
 
-    // MARK: - UICollectionViewDataSource
+        func loadBooksFromFirestore() {
+            bookService.getAllBooks { books in
+                DispatchQueue.main.async {
+                    for book in books {
+                        guard
+                            let dayView = Bundle.main.loadNibNamed("DayView", owner: nil, options: nil)?.first as? DayView,
+                            let urlString = book.imageUrl,
+                            let url = URL(string: urlString)
+                        else { continue }
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
+                        dayView.book = book
+                        dayView.translatesAutoresizingMaskIntoConstraints = false
+                        dayView.widthAnchor.constraint(equalToConstant: self.horizontallyScrollableStackView.frame.height).isActive = true
+                        self.horizontallyScrollableStackView.addArrangedSubview(dayView)
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return datos.count
-    }
+                        // Acción al tocar la imagen
+                        dayView.onTap = { [weak self] selectedBook in
+                            guard let self = self else { return }
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            if let detailVC = storyboard.instantiateViewController(withIdentifier: "BookDetailViewController") as? BookDetailViewController {
+                                detailVC.book = selectedBook
+                                self.navigationController?.pushViewController(detailVC, animated: true)
+                            }
+                        }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CeldaHorizontal", for: indexPath)
-        cell.backgroundColor = .systemBlue
-        let label = UILabel(frame: cell.contentView.bounds)
-        label.text = datos[indexPath.item]
-        label.textAlignment = .center
-        label.textColor = .white
-        cell.contentView.addSubview(label)
-        return cell
-    }
-
-    // MARK: - UICollectionViewDelegateFlowLayout (Opcional para ajustar el tamaño dinámicamente)
-
-    // Si quieres un tamaño de celda dinámico basado en el contenido, puedes implementar estos métodos.
-    // Por ahora, el tamaño está fijo en el layout.
-
-    
-    // Acción del botón para navegar a la vista de libros
-    @IBAction func didTapGoBooks(_ sender: UIButton) {
-        print("Button presionado")
-        let storyboard = UIStoryboard(name: "MyBooks", bundle: nil)
-        
-        if let booksVC = storyboard.instantiateViewController(withIdentifier: "BooksViewController") as? BooksViewController {
-            self.navigationController?.pushViewController(booksVC, animated: true)
-        } else {
-            print("No se pudo cargar el BooksViewController")
+                        // Cargar imagen
+                        URLSession.shared.dataTask(with: url) { data, _, _ in
+                            guard let data = data else { return }
+                            DispatchQueue.main.async {
+                                dayView.bookImageView.image = UIImage(data: data)
+                            }
+                        }.resume()
+                    }
+                }
+            }
         }
-    }
+
 }
+
+

@@ -11,25 +11,39 @@ import FirebaseAuth
 class UserViewController: UIViewController {
 
     @IBOutlet weak var borderView: UIView!
-    @IBOutlet weak var borderImageView: UIImageView!
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        getUser()
-        
         let path = UIBezierPath(
-            roundedRect: borderView.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSizeMake(56, 56)
+            roundedRect: borderView.bounds, byRoundingCorners: [.topLeft, .bottomRight], cornerRadii: CGSizeMake(56, 56)
         )
         
         let mask =  CAShapeLayer()
         mask.path = path.cgPath
         borderView.layer.mask = mask
-        
+
     }
     
-    func getUser() {
-        let _ = Auth.auth().currentUser?.email
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadUserData()
+    }
+    
+    func loadUserData() {
+        UserService.shared.getCurrentUser { result in
+            switch result {
+            case .success(let user):
+                DispatchQueue.main.async {
+                    self.nameLabel.text = "\(user.firstName) \(user.lastName)"
+                    self.emailLabel.text = user.email
+                }
+            case .failure(let error):
+                print("Error al obtener usuario: \(error.localizedDescription)")
+            }
+        }
     }
     
     @IBAction func didTapCloseSession(_ sender: UIButton) {
