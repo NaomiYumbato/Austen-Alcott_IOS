@@ -10,6 +10,9 @@ import UIKit
 class DayView: UIView {
     @IBOutlet weak var bookImageView: UIImageView!
     var book: Book?
+    
+    // Este closure lo va a definir el ViewController
+    var onTap: ((Book) -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,8 +26,7 @@ class DayView: UIView {
     }
 
     @objc private func imageTapped() {
-        if let title = book?.title {
-            print("Libro seleccionado: \(title)")
-        }
+        guard let book = book else { return }
+        onTap?(book)
     }
 }

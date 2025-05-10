@@ -279,7 +279,7 @@
         <!--Book Detail View Controller-->
         <scene sceneID="JXb-cX-bL3">
             <objects>
-                <viewController id="YOB-UW-rpg" customClass="BookDetailViewController" customModule="Austen_Alcott" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BookDetailViewController" id="YOB-UW-rpg" customClass="BookDetailViewController" customModule="Austen_Alcott" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vOP-eQ-GdW">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
