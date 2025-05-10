@@ -10,12 +10,13 @@ import UIKit
 class BookTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var editorialLabel: UILabel!
     @IBOutlet weak var imageBook: UIImageView!
     
     func configure(with book: Book) {
         titleLabel.text = book.title
         authorLabel.text = book.author
-        
+        editorialLabel.text = book.editorial
         if let imageUrlString = book.imageUrl, let imageUrl = URL(string: imageUrlString) {
             URLSession.shared.dataTask(with: imageUrl) { (data, response, error) in
                 if let error = error {

@@ -47,6 +47,10 @@ class BooksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         return cell
     }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
+    }
     
     // MARK: - Navigation
     ///Obtenemos el segue que se dispara al seleccionar una celda para enviar el libro seleccionado al controlador que se encarga de los detalles
