@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9CCDDAB82DCBCF0800C8F000 /* UserEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCDDAB72DCBCF0800C8F000 /* UserEditViewController.swift */; };
 		B77A0FB72DC7CFFF00EDEA2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77A0FB62DC7CFFF00EDEA2B /* User.swift */; };
 		B7E51FFC2DC6B7E900C772EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E51FFB2DC6B7E900C772EC /* AppDelegate.swift */; };
 		B7E51FFE2DC6B7E900C772EC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E51FFD2DC6B7E900C772EC /* SceneDelegate.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9CCDDAB72DCBCF0800C8F000 /* UserEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditViewController.swift; sourceTree = "<group>"; };
 		B77A0FB62DC7CFFF00EDEA2B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B7E51FF82DC6B7E900C772EC /* Austen&Alcott.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Austen&Alcott.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7E51FFB2DC6B7E900C772EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				B7E520312DC6BDF600C772EC /* UserViewController.swift */,
+				9CCDDAB72DCBCF0800C8F000 /* UserEditViewController.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				B7E5202F2DC6BD7F00C772EC /* Book.swift in Sources */,
 				E1790D9C2DC842A6006CFCE7 /* ReserveBookService.swift in Sources */,
 				B7E520002DC6B7E900C772EC /* ViewController.swift in Sources */,
+				9CCDDAB82DCBCF0800C8F000 /* UserEditViewController.swift in Sources */,
 				B7E51FFC2DC6B7E900C772EC /* AppDelegate.swift in Sources */,
 				B7E5202D2DC6BD5400C772EC /* BookTableViewCell.swift in Sources */,
 				B7E520412DC6BF2400C772EC /* HomeViewController.swift in Sources */,
